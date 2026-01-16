@@ -1,3 +1,21 @@
+Metadata-Version: 2.4
+Name: eurosat-mlops-pipeline
+Version: 0.1.0
+Summary: Minimal, traceable EuroSAT train/eval/predict pipeline
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+Requires-Dist: matplotlib>=3.8
+Requires-Dist: numpy>=1.26
+Requires-Dist: pandas>=2.2
+Requires-Dist: pillow>=10.0
+Requires-Dist: pyyaml>=6.0
+Requires-Dist: torch
+Requires-Dist: torchvision
+Requires-Dist: tqdm>=4.66
+Provides-Extra: dev
+Requires-Dist: pytest>=8.0; extra == "dev"
+Requires-Dist: ruff>=0.5; extra == "dev"
+
 # EuroSAT MLOps Pipeline
 
 Train → evaluate → predict for EuroSAT RGB (10-class land use classification), with
@@ -17,19 +35,13 @@ This repository exists as a _minimal but professional_ MLOps portfolio project:
 
 ## Setup
 
-Requirements: Python 3.11 (CI uses 3.11; local can also work on 3.10+).
+Requirements: Python 3.11.
 
 Using `uv`:
 
 ```bash
 uv venv
 uv pip install -e ".[dev]"
-```
-
-Or using the Makefile:
-
-```bash
-make setup
 ```
 
 ## Dataset
@@ -55,24 +67,18 @@ Train:
 
 ```bash
 python -m src.train --config configs/default.yaml
-# or
-make train
 ```
 
 Evaluation (use the `run_id` printed by training):
 
 ```bash
 python -m src.evaluate --run artifacts/<run_id>
-# or
-make eval RUN=artifacts/<run_id>
 ```
 
 Predict:
 
 ```bash
 python -m src.predict --run artifacts/<run_id> --input path/to/images --output predictions.csv
-# or
-make predict RUN=artifacts/<run_id> INPUT=path/to/images OUTPUT=predictions.csv
 ```
 
 ## Artifacts

@@ -1,0 +1,32 @@
+seed: 42
+
+data:
+  root_dir: data/eurosat_rgb
+  image_size: 224
+  batch_size: 32
+  num_workers: 0
+  split:
+    train: 0.8
+    val: 0.1
+    test: 0.1
+    seed: 42
+
+model:
+  name: resnet18
+  pretrained: true
+  num_classes: 10
+
+train:
+  epochs: 3
+  lr: 0.001
+  weight_decay: 0.0
+  freeze_backbone: true
+
+eval:
+  confusion_matrix: true
+
+artifacts:
+  dir: artifacts
+
+logging:
+  level: INFO
