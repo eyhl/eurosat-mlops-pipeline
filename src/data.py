@@ -8,9 +8,14 @@ from torch.utils.data import DataLoader, Subset
 from torchvision import transforms
 from torchvision.datasets import ImageFolder
 
+# For normalization, using ImageNet's stats. Avoids 
+# "shocking" the frozen weights of pretrained models.
 IMAGENET_MEAN = (0.485, 0.456, 0.406)
 IMAGENET_STD = (0.229, 0.224, 0.225)
 
+# EuroSAT dataset stats (not that far from ImageNet's)
+# EUROSAT_MEAN = (0.3444, 0.3803, 0.4078)
+# EUROSAT_STD = (0.2027, 0.1369, 0.1156)
 
 @dataclass(frozen=True)
 class SplitIndices:
