@@ -29,10 +29,12 @@ def _parse_args() -> argparse.Namespace:
     parser.add_argument("--config", required=True, help="Path to YAML config")
     return parser.parse_args()
 
+
 @torch.no_grad()
 def accuracy_from_logits(logits: torch.Tensor, targets: torch.Tensor) -> float:
     preds = logits.argmax(dim=1)
     return (preds == targets).float().mean().item()
+
 
 def _train_one_epoch(
     model: nn.Module,
@@ -216,9 +218,11 @@ def run(config_path: str | Path) -> None:
     log.info("saved model=%s", model_path)
     log.info("saved metrics=%s", run_dir / "metrics.json")
 
+
 def main() -> None:
     args = _parse_args()
     run(config_path=args.config)
+
 
 if __name__ == "__main__":
     main()

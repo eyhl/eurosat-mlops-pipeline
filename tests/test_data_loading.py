@@ -3,10 +3,12 @@ import torch
 from PIL import Image
 from src.data import load_dataset
 
+
 def test_load_dataset_raises_if_root_missing(tmp_path) -> None:
     missing_dir = tmp_path / "does_not_exist"
     with pytest.raises(FileNotFoundError):
         load_dataset(root_dir=missing_dir, image_size=64)
+
 
 def test_load_dataset_with_minimal_imagefolder(tmp_path) -> None:
     # create class dir
@@ -15,7 +17,7 @@ def test_load_dataset_with_minimal_imagefolder(tmp_path) -> None:
 
     # 2. create a tiny rgb image
     img_path = class_dir / "img.jpg"
-    img = Image.new("RGB", (8,8), color=(128, 128, 128))
+    img = Image.new("RGB", (8, 8), color=(128, 128, 128))
     img.save(img_path)
 
     # 3. load dataset
@@ -33,4 +35,4 @@ def test_load_dataset_with_minimal_imagefolder(tmp_path) -> None:
 
     # remove temporary data
     img_path.unlink()
-    class_dir.rmdir()    
+    class_dir.rmdir()

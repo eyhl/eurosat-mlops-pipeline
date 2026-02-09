@@ -22,7 +22,7 @@ def _replace_classifier(model: nn.Module, num_classes: int) -> None:
         model.classifier = nn.Linear(in_features, num_classes)
     else:
         raise ValueError("Unsupported model architecture")
-    
+
 
 def _get_head_module(model: nn.Module) -> nn.Module:
     if hasattr(model, "fc"):

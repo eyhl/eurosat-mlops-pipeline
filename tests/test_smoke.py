@@ -6,19 +6,22 @@ import yaml
 from src.model import build_model, trainable_parameters
 from src.train import run
 
+
 def test_forward_pass() -> None:
     model = build_model(num_classes=10, pretrained=False, freeze_backbone=True)
     x = torch.randn(2, 3, 224, 224)
     y = model(x)
     assert y.shape == (2, 10)
 
+
 def test_freeze_backbone_only_fc_trainable() -> None:
     model = build_model(num_classes=10, pretrained=False, freeze_backbone=True)
-    for (name, param) in model.named_parameters(): 
-        if name.startswith("fc."): 
-            assert param.requires_grad 
-        else: 
+    for name, param in model.named_parameters():
+        if name.startswith("fc."):
+            assert param.requires_grad
+        else:
             assert not param.requires_grad
+
 
 def test_trainable_parameters() -> None:
     model = build_model(num_classes=10, pretrained=False, freeze_backbone=True)
@@ -50,29 +53,20 @@ def test_train_run_smoke(tmp_path):
 
     # create config file
     config = {
-    "data": {
-        "root_dir": str(data_root),
-        "image_size": image_size,
-        "batch_size": 2,
-        "num_workers": 0,
-        "split": {
-            "train": 0.8,
-            "val": 0.1,
-            "test": 0.1
-        }
-    },
-    "model": {
-        "pretrained": False,
-        "num_classes": num_classes
-    },
-    "train": {
-        "epochs": 1,
-        "freeze_backbone": True,
-    },
-    "artifacts": {
-        "dir": str(artifacts_root)
+        "data": {
+            "root_dir": str(data_root),
+            "image_size": image_size,
+            "batch_size": 2,
+            "num_workers": 0,
+            "split": {"train": 0.8, "val": 0.1, "test": 0.1},
+        },
+        "model": {"pretrained": False, "num_classes": num_classes},
+        "train": {
+            "epochs": 1,
+            "freeze_backbone": True,
+        },
+        "artifacts": {"dir": str(artifacts_root)},
     }
-}
 
     config_path = tmp_path / "config.yaml"
 
@@ -97,13 +91,12 @@ def test_train_run_smoke(tmp_path):
 
     with open(metrics_path) as f:
         metrics = json.load(f)
-    
+
     assert metrics["epochs"] == 1
     assert metrics["best_epoch"] == 1
 
     assert len(metrics["history"]["train_loss"]) == 1
     assert len(metrics["history"]["val_loss"]) == 1
-
 
     # config_path = "configs/test.yaml"
 
