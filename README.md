@@ -1,6 +1,6 @@
 # EuroSAT MLOps Pipeline
-![example workflow](https://github.com/eyhl/group5-pyg-dtu-mlops/actions/workflows/tests.yml/badge.svg)
-![example workflow](https://github.com/eyhl/group5-pyg-dtu-mlops/actions/workflows/coverage.yml/badge.svg)  
+![example workflow](https://github.com/eyhl/eurosat-mlops-pipeline/actions/workflows/tests.yml/badge.svg)
+![example workflow](https://github.com/eyhl/eurosat-mlops-pipeline/actions/workflows/coverage.yml/badge.svg)  
 
 Train → evaluate → predict for EuroSAT RGB (10-class land use classification), with
 reproducible splits and traceable run artifacts.
