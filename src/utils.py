@@ -5,7 +5,7 @@ import logging
 import random
 import subprocess
 from dataclasses import dataclass
-from datetime import datetime, timezone
+from datetime import datetime
 from pathlib import Path
 from typing import Any
 
@@ -89,7 +89,7 @@ def get_git_info() -> GitInfo:
 
 
 def make_run_id(git_info: GitInfo) -> str:
-    timestamp = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
+    timestamp = datetime.now(datetime.UTC).strftime("%Y%m%d_%H%M%S")
     suffix = git_info.short_commit or "nogit"
     return f"{timestamp}_{suffix}"
 

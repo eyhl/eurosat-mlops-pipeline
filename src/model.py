@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-from typing import Any
-
 from torch import nn
 from torchvision.models import ResNet18_Weights, resnet18
 

@@ -1,9 +1,9 @@
-from src.train import _train_one_epoch, _eval_one_epoch, accuracy_from_logits
-from src.data import load_dataset, build_dataloaders, make_split_indices
-from PIL import Image
+import math
+
 import torch
 from torch import nn
-import math
+
+from src.train import _eval_one_epoch, _train_one_epoch, accuracy_from_logits
 
 
 def test_train_one_epoch_random_data() -> None:
@@ -35,7 +35,7 @@ def test_train_one_epoch_random_data() -> None:
     # check if model parameters have been updated
     assert any(
         not torch.equal(before, after)
-        for before, after in zip(initial_model_parameters, model.parameters())
+        for before, after in zip(initial_model_parameters, model.parameters(), strict=True)
     )
 
 
@@ -64,7 +64,7 @@ def test_eval_one_epoch_random_data() -> None:
 
     no_change_in_parameters = all(
         torch.equal(before, after)
-        for before, after in zip(initial_model_parameters, model.parameters())
+        for before, after in zip(initial_model_parameters, model.parameters(), strict=True)
     )
     assert no_change_in_parameters
 

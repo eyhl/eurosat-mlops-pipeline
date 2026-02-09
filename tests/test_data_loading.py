@@ -1,6 +1,7 @@
 import pytest
 import torch
 from PIL import Image
+
 from src.data import load_dataset
 
 

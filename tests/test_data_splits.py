@@ -1,4 +1,5 @@
 import pytest
+
 from src.data import make_split_indices
 
 dataset_size = 100

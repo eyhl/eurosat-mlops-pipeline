@@ -1,8 +1,10 @@
 import json
+
 import pytest
 import torch
-from torchvision import transforms
 import yaml
+from torchvision import transforms
+
 from src.model import build_model, trainable_parameters
 from src.train import run
 
@@ -42,10 +44,10 @@ def test_train_run_smoke(tmp_path):
 
     # create dummy data directory
     for i in range(num_classes):
-        class_dir = data_root / "class_{}".format(i)
+        class_dir = data_root / f"class_{i}"
         class_dir.mkdir(parents=True)
         for j in range(num_samples):
-            img_path = class_dir / "img_{}.jpg".format(j)
+            img_path = class_dir / f"img_{j}.jpg"
             img = torch.randint(0, 256, (3, image_size, image_size), dtype=torch.uint8)
             img[i, :, :] = 128
             img_pil = transforms.ToPILImage()(img)

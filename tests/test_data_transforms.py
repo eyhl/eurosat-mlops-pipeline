@@ -1,5 +1,6 @@
 from torchvision import transforms
-from src.data import build_transforms, IMAGENET_MEAN, IMAGENET_STD
+
+from src.data import IMAGENET_MEAN, IMAGENET_STD, build_transforms
 
 
 def test_build_transforms_resize() -> None:
