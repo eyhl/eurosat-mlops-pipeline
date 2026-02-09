@@ -12,7 +12,7 @@ data:
     seed: 42
 
 model:
-  name: resnet18
+  backbone_name: resnet18
   pretrained: true
   num_classes: 10
 

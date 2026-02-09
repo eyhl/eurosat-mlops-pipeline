@@ -30,3 +30,7 @@ def test_load_dataset_with_minimal_imagefolder(tmp_path) -> None:
     assert img_tensor.shape == (3, 32, 32)
     assert label == 0
     assert isinstance(img_tensor, torch.Tensor)
+
+    # remove temporary data
+    img_path.unlink()
+    class_dir.rmdir()    

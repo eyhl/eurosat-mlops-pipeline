@@ -21,7 +21,6 @@ from src.utils import (
     save_json,
     save_yaml,
     set_seed,
-    accuracy_from_logits,
 )
 
 
@@ -30,6 +29,10 @@ def _parse_args() -> argparse.Namespace:
     parser.add_argument("--config", required=True, help="Path to YAML config")
     return parser.parse_args()
 
+@torch.no_grad()
+def accuracy_from_logits(logits: torch.Tensor, targets: torch.Tensor) -> float:
+    preds = logits.argmax(dim=1)
+    return (preds == targets).float().mean().item()
 
 def _train_one_epoch(
     model: nn.Module,
@@ -88,9 +91,8 @@ def _eval_one_epoch(
     return running_loss / max(batches, 1), running_acc / max(batches, 1)
 
 
-def main() -> None:
-    args = _parse_args()
-    config = load_yaml(args.config)
+def run(config_path: str | Path) -> None:
+    config = load_yaml(config_path)
 
     configure_logging(str(config.get("logging", {}).get("level", "INFO")))
     log = get_logger("train")
@@ -142,6 +144,7 @@ def main() -> None:
     train_cfg = config.get("train", {})
 
     model = build_model(
+        backbone_name=str(model_cfg.get("name", "resnet18")),
         num_classes=int(model_cfg.get("num_classes", 10)),
         pretrained=bool(model_cfg.get("pretrained", True)),
         freeze_backbone=bool(train_cfg.get("freeze_backbone", True)),
@@ -213,6 +216,9 @@ def main() -> None:
     log.info("saved model=%s", model_path)
     log.info("saved metrics=%s", run_dir / "metrics.json")
 
+def main() -> None:
+    args = _parse_args()
+    run(config_path=args.config)
 
 if __name__ == "__main__":
     main()
