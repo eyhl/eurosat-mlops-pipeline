@@ -1,7 +1,11 @@
 import json
-import pytest
-from src import evaluate
 import math
+
+import pytest
+
+from src import evaluate
+
+
 @pytest.mark.slow
 def test_eval_smoke(trained_run_dir):
     run_dir = trained_run_dir

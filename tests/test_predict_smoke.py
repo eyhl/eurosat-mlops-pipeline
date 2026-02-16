@@ -1,9 +1,11 @@
 
+import pandas as pd
 import pytest
 import torch
 from torchvision import transforms
+
 from src import predict
-import pandas as pd
+
 
 @pytest.mark.slow
 def test_predict_smoke(tmp_path, trained_run_dir):

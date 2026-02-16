@@ -2,9 +2,9 @@ import json
 
 import pytest
 import torch
-from torchvision import transforms
 
 from src.model import build_model, trainable_parameters
+
 
 def test_forward_pass() -> None:
     model = build_model(num_classes=10, pretrained=False, freeze_backbone=True)
