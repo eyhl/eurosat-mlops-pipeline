@@ -37,19 +37,14 @@ def _iter_images(folder: Path) -> list[Path]:
     paths = [p for p in folder.rglob("*") if p.is_file() and p.suffix.lower() in exts]
     return sorted(paths)
 
-
 @torch.no_grad()
-def main() -> None:
-    args = _parse_args()
-    run_dir = Path(args.run)
-    input_dir = Path(args.input)
-    output_path = Path(args.output)
-
+def run(*, run_dir: Path, input_dir: Path, output_path: Path) -> None:
     config = load_yaml(run_dir / "config_used.yaml")
     configure_logging(str(config.get("logging", {}).get("level", "INFO")))
     log = get_logger("predict")
 
     device = get_device()
+
     log.info("device=%s", device)
 
     checkpoint = torch.load(run_dir / "model.pt", map_location="cpu")
@@ -99,6 +94,15 @@ def main() -> None:
 
     log.info("wrote predictions=%s (n=%d)", output_path, len(df))
 
+def main() -> None: # pragma: no cover
+    args = _parse_args()
+    run_dir = Path(args.run)
+    input_dir = Path(args.input)
+    output_path = Path(args.output)
 
-if __name__ == "__main__":
+    run(run_dir=run_dir, input_dir=input_dir, output_path=output_path)
+
+
+
+if __name__ == "__main__": # pragma: no cover
     main()

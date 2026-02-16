@@ -4,9 +4,7 @@ import argparse
 from pathlib import Path
 
 import matplotlib
-
 matplotlib.use("Agg")
-
 import matplotlib.pyplot as plt
 import numpy as np
 import torch
@@ -98,16 +96,13 @@ def _plot_confusion_matrix(
     fig.savefig(out_path, dpi=150)
     plt.close(fig)
 
-
-def main() -> None:
-    args = _parse_args()
-    run_dir = Path(args.run)
-
+def run(*, run_dir: Path) -> None:
     config = load_yaml(run_dir / "config_used.yaml")
     configure_logging(str(config.get("logging", {}).get("level", "INFO")))
     log = get_logger("evaluate")
 
     device = get_device()
+
     log.info("device=%s", device)
 
     data_cfg = config.get("data", {})
@@ -161,6 +156,11 @@ def main() -> None:
         _plot_confusion_matrix(confusion, class_names=class_names, out_path=out_path)
         log.info("saved confusion_matrix=%s", out_path)
 
+def main() -> None: # pragma: no cover
+    args = _parse_args()
+    run_dir = Path(args.run)
+    run(run_dir=run_dir)
 
-if __name__ == "__main__":
+
+if __name__ == "__main__": # pragma: no cover
     main()

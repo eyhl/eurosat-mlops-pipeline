@@ -219,10 +219,10 @@ def run(config_path: str | Path) -> None:
     log.info("saved metrics=%s", run_dir / "metrics.json")
 
 
-def main() -> None:
+def main() -> None: # pragma: no cover
     args = _parse_args()
     run(config_path=args.config)
 
 
-if __name__ == "__main__":
+if __name__ == "__main__": # pragma: no cover
     main()

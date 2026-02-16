@@ -43,6 +43,9 @@ markers = [
 [tool.setuptools]
 packages = ["src"]  
 
+[tool.coverage.run]
+source = ["src"]
+
 [build-system]
 requires = ["setuptools>=68", "wheel"]
 build-backend = "setuptools.build_meta"

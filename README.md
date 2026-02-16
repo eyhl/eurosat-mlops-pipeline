@@ -109,7 +109,6 @@ The chosen device is logged at startup in each CLI.
 - No automatic dataset download (by design; reduces hidden network variability).
 
 ## Development
-
 Run lint + tests:
 
 ```bash
@@ -117,8 +116,21 @@ ruff check .
 pytest
 ```
 
+There's both unit and integration tests. You can select as follows:
 Run a single test:
 
 ```bash
-pytest tests/test_smoke.py::test_forward_pass
+pytest tests/test_data_splits.py::test_make_split_indices_lengths
+```
+
+Run only fast tests (unit tests):
+
+```bash
+pytest -m "not slow"
+```
+
+Run only slower integration test (decorated with ```@pytest.mark.slow```):
+
+```bash
+pytest -m slow
 ```
